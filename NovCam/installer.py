@@ -140,8 +140,7 @@ class Novacam():
 
         if self.version_pkg(file_ipk.split('_')[0]) == file_ipk.split('_')[1]:
             system('clear')
-            print('you are use the latest version: {}{}{}\n'.format(
-                Y, file_ipk.split('_')[1], C).capitalize())
+            print('you are use the latest version: {}{}{}\n'.format(Y, file_ipk.split('_')[1], C).capitalize())
             sleep(0.8)
             print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
