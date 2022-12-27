@@ -80,30 +80,31 @@ class SubsSupport():
         else:
             file = "".join([self.package, '_1.5.8_py2.', self.extension])
 
-        print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
-            G, C, Y, self.package, C))
-        if self.check() == self.package:
-            system(" ".join([self.install, self.package]))
-        else:
-            chdir('/tmp')
+        if not self.package_check(self.package):
+            print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
+                G, C, Y, self.package, C))
+            if self.check() == self.package:
+                system(" ".join([self.install, self.package]))
+            else:
+                chdir('/tmp')
+
+                if isfile(file):
+                    remove(file)
+                    sleep(0.8)
+
+                urlretrieve("".join([self.url, file]), filename=file)
+                sleep(0.8)
+
+                system(" ".join([self.install, file]))
 
             if isfile(file):
                 remove(file)
                 sleep(0.8)
 
-            urlretrieve("".join([self.url, file]), filename=file)
-            sleep(0.8)
-
-            system(" ".join([self.install, file]))
-
-        if isfile(file):
-            remove(file)
-            sleep(0.8)
-
-        if self.Stb_Image():
-            system('killall -9 enigma2')
-        else:
-            system('systemctl restart enigma2')
+            if self.Stb_Image():
+                system('killall -9 enigma2')
+            else:
+                system('systemctl restart enigma2')
 
 
 if __name__ == '__main__':
