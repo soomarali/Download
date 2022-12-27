@@ -30,7 +30,7 @@ class SubsSupport():
 
         if version_info[0] == 3:
             self.depends = list(
-                map(lambda x: x.replace('python', 'python3').replace('python-zlib',''), self.depends))
+                map(lambda x: x.replace('python-zlib', '').replace('python', 'python3'), self.depends))
 
     def Stb_Image(self):
         if isfile('/etc/opkg/opkg.conf'):
