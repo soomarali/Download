@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-from os import chdir, remove, system
+from os import chdir, chmod, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall, match
 from sys import version_info
@@ -162,6 +162,8 @@ fi
 sed -i '/RELOAD/d' {}
 sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
             file.close()
+
+        chmod('/etc/init.d/fixemu.sh', 0o755)
         system("update-rc.d fixemu.sh defaults >/dev/null 2>&1")
 
     def main(self):
