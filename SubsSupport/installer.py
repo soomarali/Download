@@ -80,7 +80,10 @@ class SubsSupport():
         else:
             file = "".join([self.package, '_1.5.8_py2.', self.extension])
 
-        if not self.package_check(self.package):
+        if self.package_check(self.package):
+            print('The plugin is installed: {}{}{}\n'.format(
+                Y, self.package, C).capitalize())
+        else:
             print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
                 G, C, Y, self.package, C))
             if self.check() == self.package:
