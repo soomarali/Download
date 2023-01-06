@@ -203,6 +203,7 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 "13": "".join([self.package, "gosatplus-ncam"])
             }
             menu = """
+                                (00) Exit
             (1) Oscam       (6)  SupTV_Oscam        (11) PowerCam_Ncam
             (2) Ncam        (7)  Revcam_Oscam       (12) Revcam_Ncam
             (3) PowerCam    (8)  GosatPlus_Oscam    (13) GosatPlus_Ncam
@@ -227,53 +228,59 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
         choice = self.prompt(cam.keys())
 
         for number in choice:
-            value = cam.get(number)
-            self.file = "{}_{}_all.{}".format(
-                value, self.info(value.split('-')[-1]), self.extension)
+            if number == '00':
+                print("GoodBye ...!\n", "   Written by {}MOHAMED_OS{}(͡๏̯͡๏) \n".format(
+                    B, C, R, C))
+            else:
+                value = cam.get(number)
+                self.file = "{}_{}_all.{}".format(
+                    value, self.info(value.split('-')[-1]), self.extension)
 
-            if self.check(value):
-                system('{} {} '.format(self.uninstall, value))
+                if self.check(value):
+                    system('{} {} '.format(self.uninstall, value))
 
-            if isfile(self.file):
-                remove(self.file)
+                if isfile(self.file):
+                    remove(self.file)
+                    sleep(0.8)
+
+                chdir('/tmp')
+
+                if self.Stb_Image():
+                    UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
+                    FileSsl = "libcrypto1.0.0_1.0.2_all.ipk"
+                else:
+                    UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.6/'])
+                    FileSsl = "libcrypto1.0.0_1.0.2h-r0.0_all.deb"
+
+                if "powercam" in value:
+                    CheckLib = popen(
+                        " ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
+                    if CheckLib == 'libcrypto-compat-1.0.0':
+                        if not self.check('libcrypto-compat-1.0.0'):
+                            system('clear')
+                            print(
+                                "   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
+                            system(
+                                '{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
+                    else:
+                        print(
+                            "   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
+                        urlretrieve("".join([UrlSsl, FileSsl]), filename=FileSsl)
+                        system(" ".join([self.install, FileSsl]))
+                        remove(FileSsl)
+
+                system('clear')
+                print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
+                    G, C, Y, value, C))
+
+                urlretrieve("".join([self.URL, self.file]), filename=self.file)
                 sleep(0.8)
 
-            chdir('/tmp')
+                system(" ".join([self.install, self.file]))
+                sleep(1)
 
-            if self.Stb_Image():
-                UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
-                FileSsl = "libcrypto1.0.0_1.0.2_all.ipk"
-            else:
-                UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.6/'])
-                FileSsl = "libcrypto1.0.0_1.0.2h-r0.0_all.deb"
-
-            if "powercam" in value:
-                CheckLib = popen(
-                    " ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
-                if CheckLib == 'libcrypto-compat-1.0.0':
-                    if not self.check('libcrypto-compat-1.0.0'):
-                        system('clear')
-                        print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
-                        system(
-                            '{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
-                else:
-                    print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
-                    urlretrieve("".join([UrlSsl, FileSsl]), filename=FileSsl)
-                    system(" ".join([self.install, FileSsl]))
-                    remove(FileSsl)
-
-            system('clear')
-            print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
-                G, C, Y, value, C))
-
-            urlretrieve("".join([self.URL, self.file]), filename=self.file)
-            sleep(0.8)
-
-            system(" ".join([self.install, self.file]))
-            sleep(1)
-
-            if "supcam" in value:
-                self.FixEmu()
+                if "supcam" in value:
+                    self.FixEmu()
 
 
 if __name__ == '__main__':
