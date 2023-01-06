@@ -204,6 +204,7 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
             }
             menu = """
                                 (00) Exit
+
             (1) Oscam       (6)  SupTV_Oscam        (11) PowerCam_Ncam
             (2) Ncam        (7)  Revcam_Oscam       (12) Revcam_Ncam
             (3) PowerCam    (8)  GosatPlus_Oscam    (13) GosatPlus_Ncam
@@ -219,6 +220,8 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 "5": "".join([self.package, "gosatplus"])
             }
             menu = """
+                            (00) Exit
+
             (1) Oscam          (2) Ncam          (3) Revcam
             (4) PowerCam       (5) GosatPlus
             """
@@ -229,8 +232,11 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
         for number in choice:
             if number == '00':
-                print("GoodBye ...!\n", "   Written by {}MOHAMED_OS{}(͡๏̯͡๏) \n".format(
+                system('clear')
+                self.banner()
+                print("\nGoodBye ...!\n", "   Written by {}MOHAMED_OS{}(͡๏̯͡๏) \n".format(
                     B, C, R, C))
+                exit()
             else:
                 value = cam.get(number)
                 self.file = "{}_{}_all.{}".format(
