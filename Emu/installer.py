@@ -246,10 +246,12 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 chdir('/tmp')
 
                 if self.Stb_Image():
-                    UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
+                    UrlSsl = "".join(
+                        [self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
                     FileSsl = "libcrypto1.0.0_1.0.2_all.ipk"
                 else:
-                    UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.6/'])
+                    UrlSsl = "".join(
+                        [self.URL[:46], 'OpenSsl_IPK/main/OE2.6/'])
                     FileSsl = "libcrypto1.0.0_1.0.2h-r0.0_all.deb"
 
                 if "powercam" in value:
@@ -265,7 +267,8 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                     else:
                         print(
                             "   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
-                        urlretrieve("".join([UrlSsl, FileSsl]), filename=FileSsl)
+                        urlretrieve(
+                            "".join([UrlSsl, FileSsl]), filename=FileSsl)
                         system(" ".join([self.install, FileSsl]))
                         remove(FileSsl)
 
