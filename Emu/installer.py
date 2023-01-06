@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-from os import chdir, chmod, remove, system
+from os import chdir, chmod, popen, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall, match
 from sys import version_info
@@ -42,12 +42,14 @@ class Emulator():
             self.status = '/var/lib/opkg/status'
             self.update = 'opkg update >/dev/null 2>&1'
             self.install = 'opkg install'
+            self.list = 'opkg list'
             self.uninstall = 'opkg remove --force-depends'
             self.extension = 'ipk'
         else:
             self.status = '/var/lib/dpkg/status'
             self.update = 'apt-get update >/dev/null 2>&1'
             self.install = 'apt-get install'
+            self.list = 'apt-get list'
             self.uninstall = 'apt-get purge --auto-remove'
             self.extension = 'deb'
         return isfile('/etc/opkg/opkg.conf')
@@ -244,6 +246,27 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
             urlretrieve("".join([self.URL, self.file]), filename=self.file)
             sleep(0.8)
+
+            if self.Stb_Image():
+                UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
+                FileSsl = "libcrypto1.0.0_1.0.2_all.ipk"
+            else:
+                UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.6/'])
+                FileSsl = "libcrypto1.0.0_1.0.2h-r0.0_all.deb"
+
+            if "powercam" in value:
+                CheckLib = popen(
+                    " ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
+                if CheckLib == 'libcrypto-compat-1.0.0':
+                    if not self.check('libcrypto-compat-1.0.0'):
+                        system('clear')
+                        print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(
+                            G, C, Y, C))
+                        system('{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
+                else:
+                    urlretrieve("".join([UrlSsl, FileSsl]), filename=FileSsl)
+                    system(" ".join([self.install, FileSsl]))
+                    remove(FileSsl)
 
             system(" ".join([self.install, self.file]))
             sleep(1)
