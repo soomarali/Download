@@ -271,12 +271,13 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                             system(
                                 '{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
                     else:
-                        print(
-                            "   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
-                        urlretrieve(
-                            "".join([UrlSsl, FileSsl]), filename=FileSsl)
-                        system(" ".join([self.install, FileSsl]))
-                        remove(FileSsl)
+                        if not self.check(FileSsl.split('_')[0]):
+                            print(
+                                "   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(G, C, Y, FileSsl.split('_')[0], C))
+                            urlretrieve(
+                                "".join([UrlSsl, FileSsl]), filename=FileSsl)
+                            system(" ".join([self.install, FileSsl]))
+                            remove(FileSsl)
 
                 system('clear')
                 print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
