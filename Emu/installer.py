@@ -240,13 +240,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
             chdir('/tmp')
 
-            system('clear')
-            print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
-                G, C, Y, value, C))
-
-            urlretrieve("".join([self.URL, self.file]), filename=self.file)
-            sleep(0.8)
-
             if self.Stb_Image():
                 UrlSsl = "".join([self.URL[:46], 'OpenSsl_IPK/main/OE2.0/'])
                 FileSsl = "libcrypto1.0.0_1.0.2_all.ipk"
@@ -260,13 +253,21 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 if CheckLib == 'libcrypto-compat-1.0.0':
                     if not self.check('libcrypto-compat-1.0.0'):
                         system('clear')
-                        print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(
-                            G, C, Y, C))
-                        system('{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
+                        print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
+                        system(
+                            '{};{} libcrypto-compat-1.0.0'.format(self.update, self.install))
                 else:
+                    print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat-1.0.0{} ...".format(G, C, Y, C))
                     urlretrieve("".join([UrlSsl, FileSsl]), filename=FileSsl)
                     system(" ".join([self.install, FileSsl]))
                     remove(FileSsl)
+
+            system('clear')
+            print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
+                G, C, Y, value, C))
+
+            urlretrieve("".join([self.URL, self.file]), filename=self.file)
+            sleep(0.8)
 
             system(" ".join([self.install, self.file]))
             sleep(1)
