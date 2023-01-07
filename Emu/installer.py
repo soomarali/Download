@@ -155,10 +155,6 @@ if [ $STB_IMAGE = 'egami' ] || [ $STB_IMAGE = 'openbh' ]; then
 
 fi
 
-if ! [ -e /usr/local/etc/oscam.dvbapi ]; then
-    wget -qO /usr/local/etc/oscam.dvbapi https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Emu/oscam.dvbapi
-fi
-
 if [ -e /etc/RELOAD.sh ]; then
     rm -rf /etc/RELOAD.sh
 fi
