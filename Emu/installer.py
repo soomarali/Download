@@ -9,7 +9,7 @@ from re import MULTILINE, findall, match
 from sys import version_info
 from time import sleep
 
-if version_info.major == 3:
+if version_info[0] == 3:
     from urllib.error import HTTPError, URLError
     from urllib.request import Request, urlopen, urlretrieve
 else:

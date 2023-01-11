@@ -8,7 +8,7 @@ from os.path import isfile
 from sys import version_info
 from time import sleep
 
-if version_info.major == 3:
+if version_info[0] == 3:
     from urllib.error import HTTPError, URLError
     from urllib.request import Request, urlopen, urlretrieve
 else:
@@ -47,7 +47,7 @@ def info(item):
         response = urlopen(req)
         link = loads(response.read()).get(item)
         if item == 'depends':
-            if version_info.major == 3:
+            if version_info[0] == 3:
                 return list(map(lambda x: x.replace('python', 'python3').replace('python3-imaging', 'python3-pillow'), link))
         return link
     except HTTPError as e:
@@ -87,7 +87,7 @@ def main():
             system(" ".join([install, name]))
             sleep(1)
 
-    if version_info.major == 3:
+    if version_info[0] == 3:
         file = "".join([package, "_py3_{}_all.ipk".format(info('version'))])
     else:
         file = "".join([package, "_py2_{}_all.ipk".format(info('version'))])

@@ -8,7 +8,7 @@ from socket import gethostname
 from sys import version_info
 from time import sleep
 
-if version_info.major == 3:
+if version_info[0] == 3:
     from urllib.error import HTTPError, URLError
     from urllib.request import Request, urlopen, urlretrieve
 else:
@@ -33,7 +33,7 @@ class IPaudio():
         self.package = ['enigma2-plugin-systemplugins-serviceapp', 'ffmpeg', 'gstreamer1.0-plugins-base',
                         'gstreamer1.0-plugins-good', 'python-core', 'python-cryptography', 'python-json', 'python-requests']
 
-        if version_info.major == 3:
+        if version_info[0] == 3:
             self.package = list(
                 map(lambda x: x.replace('python', 'python3'), self.package))
 
@@ -106,7 +106,7 @@ Y888888P 88      YP   YP ~Y8888P' Y8888D' Y888888P  `Y88P'""", C)
         self.banner()
         sleep(2)
 
-        if version_info.major == 3:
+        if version_info[0] == 3:
             file = self.info('python3')
         else:
             file = self.info('python2')
