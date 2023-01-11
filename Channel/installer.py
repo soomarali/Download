@@ -7,7 +7,7 @@ from __future__ import print_function
 import tarfile
 from datetime import datetime
 from os import chdir, chmod, remove, system, uname
-from os.path import abspath, commonprefix, exists, isfile, join
+from os.path import exists, isfile, join
 from re import MULTILINE, findall
 from sys import version_info
 from time import sleep
