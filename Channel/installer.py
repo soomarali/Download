@@ -7,12 +7,12 @@ from __future__ import print_function
 import tarfile
 from datetime import datetime
 from os import chdir, chmod, remove, system, uname
-from os.path import exists, isfile, join
+from os.path import abspath, commonprefix, exists, isfile, join
 from re import MULTILINE, findall
 from sys import version_info
 from time import sleep
 
-if version_info.major == 3:
+if version_info[0] == 3:
     from urllib.error import HTTPError, URLError
     from urllib.request import Request, urlopen, urlretrieve
 else:
@@ -29,13 +29,10 @@ Y = "\033[0;33m"  # yellow (info)
 
 
 class Setting():
-    URL_DOW = 'https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Channel/'
-    url = 'https://github.com/MOHAMED19OS/Download/tree/main/Channel'
+    link = 'https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Channel/'
+    page = 'https://github.com/MOHAMED19OS/Download/tree/main/Channel'
 
     def __init__(self):
-        self.link = Setting.URL_DOW
-        self.page = Setting.url
-        self.package = []
         self.file_info = []
         self.date = datetime.now().strftime("%d-%m-%Y %X")
         self.path_abertis = '/etc/astra/scripts/abertis'
@@ -81,15 +78,13 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
     def image(self):
         return exists('/etc/opkg/opkg.conf')
 
-    def check(self):
-        self.pkg = []
-        with open('/var/lib/opkg/status') as f:
-            for items in f.readlines():
-                if items.startswith('Package:'):
-                    self.pkg.append(items[items.index(' '):].strip())
-        for p in ['astra-sm', 'dvbsnoop']:
-            if p not in self.pkg:
-                self.package.append(p)
+    def check(self, pkg):
+        with open('/var/lib/opkg/status') as file:
+            for item in file.readlines():
+                if item.startswith('Package:'):
+                    if findall(pkg, item[item.index(' '):].strip(), MULTILINE):
+                        return True
+            file.close()
 
     def delete(self):
         for file in ['lamedb', '*list', '*.tv', '*.radio', '*.xml']:
@@ -101,34 +96,37 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
                 remove(join(self.path_dir, file))
 
     def main(self):
-        build.check()
-        build.banner()
+        self.banner()
 
-        if build.image():
-            if self.package:
-                system('opkg update >/dev/null 2>&1')
-                for pkg in self.package:
-                    system('clear')
-                    print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
-                        B, C, Y, pkg, C))
-                    system('opkg install {}'.format(pkg))
+        if self.image():
+            if not self.check('astra-sm'):
+                system('clear')
+                print("   >>>>   {}Please Wait{} while we Install {}astra-sm{} ...".format(
+                    G, C, Y, C))
+                system('opkg install astra-sm')
 
         chdir('/tmp')
 
         if isfile(self.file_info[-1]):
             remove(self.file_info[-1])
 
-        build.delete()
-
         system('clear')
+        self.banner()
+
         print("{}Downloading{} And Installing Channel {}Please Wait{} {}......{}".format(
             Y, C, R, C, G, C))
 
         try:
-            urlretrieve("".join([self.link, self.file_info[-1]]),filename=self.file_info[-1])
-            with tarfile.open(self.file_info[-1]) as f:
-                f.extractall('/')
-            f.close()
+            urlretrieve("".join([self.link, self.file_info[-1]]),
+                        filename=self.file_info[-1])
+
+            print(
+                '{}(?){} Now It Will be deleted Old Settings And Add The New'.format(B, C))
+            with tarfile.open(self.file_info[-1]) as tar_ref:
+                for member in tar_ref.getmembers():
+                    tar_ref.extract(member, "/")
+            tar_ref.close()
+
             if isfile(self.file_info[-1]):
                 remove(self.file_info[-1])
         except:
@@ -167,8 +165,10 @@ net.ipv4.tcp_tw_recycle = 0""")
                         "".join([self.link, join('astra-sm/', name, self.path_abertis[19:])]), self.path_abertis)
             chmod(self.path_abertis, 0o755)
 
-            system('sleep 3;init 6')
+            print('{}(?){} Device will reboot now'.format(B, C))
+            system('sleep 5;init 6')
         else:
+            print('{}(?){} Device will restart now'.format(B, C))
             system('systemctl restart enigma2')
 
 
