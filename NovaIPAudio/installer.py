@@ -82,9 +82,7 @@ Y888888P 88      YP   YP ~Y8888P' Y8888D' Y888888P  `Y88P'""", C)
     def main(self):
         self.Stb_Image()
 
-        if self.hostname == 'novaler4k' or self.hostname == 'novaler4kse':
-            pass
-        else:
+        if self.hostname not in ['novaler4k', 'novaler4kse', 'multibox', 'multiboxse']:
             print('\n{}(!){}sorry image not supported!!\n'.format(
                 R, C).capitalize())
             sleep(0.8)
