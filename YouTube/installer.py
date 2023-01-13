@@ -30,7 +30,6 @@ class YouTube():
     page = "https://github.com/MOHAMED19OS/Download/tree/main/YouTube"
 
     def __init__(self):
-        self.plugin_dir = '/usr/lib/enigma2/python/Plugins/Extensions/YouTube/'
         self.package = "enigma2-plugin-extensions-youtube"
         self.depends = ["python-codecs", "python-core",
                         "python-json", "python-netclient"]
@@ -150,10 +149,6 @@ Y88b   d88P            88888888888       888
 
         if isfile('/etc/enigma2/YouTube.key-opkg'):
             remove('/etc/enigma2/YouTube.key-opkg')
-
-        if not isfile(join(self.plugin_dir, 'version')):
-            with open(join(self.plugin_dir, 'version')) as f:
-                f.write("version={}".format(file.split('+')[-2].strip()))
 
         if self.stb_Image():
             system('killall -9 enigma2')
