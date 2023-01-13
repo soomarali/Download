@@ -51,7 +51,7 @@ fi
 
 ########################
 install() {
-    if ! grep -qs "Package: $1" $STATUS; then
+    if ! grep -qs "Package: $1" "$STATUS"; then
         $OPKG >/dev/null 2>&1
         echo "   >>>>   Need to install $1   <<<<"
         echo
@@ -70,7 +70,7 @@ else
     for i in python-codecs python-core python-json python-netclient; do
         install $i
     done
-    if [ $OSTYPE = "DreamOS" ]; then
+    if [ "$OSTYPE" = "DreamOS" ]; then
         for d in gstreamer1.0-plugins-base-meta gstreamer1.0-plugins-good-spectrum; do
             install $d
         done
@@ -79,7 +79,7 @@ fi
 
 ########################
 echo "Insallling YouTube plugin Please Wait ......"
-if [ $OSTYPE = "Opensource" ]; then
+if [ "$OSTYPE" = "Opensource" ]; then
     wget $MY_URL/${PACKAGE}_h1+"${VERSION}"+"${GIT}"-r0.0_all.ipk -qP $TMPDIR
     $OPKGINSTAL $TMPDIR/${PACKAGE}_h1+"${VERSION}"+"${GIT}"-r0.0_all.ipk
 else
@@ -109,7 +109,7 @@ echo "**                                                                    *"
 echo "***********************************************************************"
 echo ""
 
-if [ $OSTYPE = "Opensource" ]; then
+if [ "$OSTYPE" = "Opensource" ]; then
     killall -9 enigma2
 else
     systemctl restart enigma2
