@@ -128,7 +128,9 @@ Y88b   d88P            88888888888       888
             print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
+            print('Remove Old version\n')
             system(" ".join([self.uninstall, file.split('_')[0]]))
+            sleep(1)
 
         system('clear')
         self.banner()
