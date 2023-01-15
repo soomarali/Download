@@ -77,8 +77,11 @@ class YouTube():
             print('URL Error: ', e.reason)
 
     def version(self):
-        check = popen(" ".join([self.list, self.package])).read().split("-")[-2].strip()
-        return check.split('+')[-2]
+        check = popen(" ".join([self.list, self.package])).read()
+        try:
+            return check.split("-")[-2].strip().split('+')[-2]
+        except IndexError:
+            return False
 
     def banner(self):
         system('clear')
@@ -121,7 +124,9 @@ Y88b   d88P            88888888888       888
             remove(join('/tmp/', file))
             sleep(0.8)
 
-        if self.version() == file.split('+')[-2].strip():
+        if self.version() is False:
+            pass
+        elif self.version() == file.split('+')[-2].strip():
             print('\nyou are use the latest version: {}{}{}\n'.format(
                 Y, file.split('+')[-2].strip(), C).capitalize())
             sleep(0.8)
