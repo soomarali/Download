@@ -104,8 +104,7 @@ Y88b   d88P            88888888888       888
         sleep(1)
 
         if not self.stb_Image():
-            self.depends.extend("gstreamer1.0-plugins-base-meta",
-                                "gstreamer1.0-plugins-good-spectrum")
+            self.depends.extend(["gstreamer1.0-plugins-base-meta","gstreamer1.0-plugins-good-spectrum"])
 
         for pkg_name in self.depends:
             if not self.package_check(pkg_name):
