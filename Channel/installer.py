@@ -87,6 +87,8 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
             file.close()
 
     def delete(self):
+        print('{}(?){} Now It Will be deleted Old Settings And Add The New'.format(B, C))
+
         for file in ['lamedb', '*list', '*.tv', '*.radio', '*.xml']:
             if file != '*.xml':
                 self.path_dir = '/etc/enigma2/'
@@ -94,6 +96,9 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
                 self.path_dir = '/etc/tuxbox/'
             if isfile(join(self.path_dir, file)):
                 remove(join(self.path_dir, file))
+
+        sleep(0.8)
+        urlretrieve('http://127.0.0.1/web/servicelistreload?mode=0')
 
     def main(self):
         self.banner()
@@ -120,8 +125,9 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
             urlretrieve("".join([self.link, self.file_info[-1]]),
                         filename=self.file_info[-1])
 
-            print(
-                '{}(?){} Now It Will be deleted Old Settings And Add The New'.format(B, C))
+            self.delete()
+            sleep(0.8)
+
             with tarfile.open(self.file_info[-1]) as tar_ref:
                 for member in tar_ref.getmembers():
                     tar_ref.extract(member, "/")
@@ -133,6 +139,7 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
             print('No File Found')
             exit()
 
+        print('{}(?){} Reload UserBouquets and LameDB'.format(B, C))
         urlretrieve('http://127.0.0.1/web/servicelistreload?mode=0')
 
         if build.image():
