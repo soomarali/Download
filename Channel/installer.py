@@ -118,7 +118,7 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
         system('clear')
         self.banner()
 
-        print("{}Downloading{} And Installing Channel {}Please Wait{} {}......{}".format(
+        print("\n{}Downloading{} And Installing Channel {}Please Wait{} {}......{}".format(
             Y, C, R, C, G, C))
 
         try:
