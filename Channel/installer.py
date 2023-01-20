@@ -171,7 +171,7 @@ net.ipv4.tcp_tw_recycle = 0""")
 
             for file_chmod in [self.path_abertis, self.path_astra]:
                 if oct(stat(file_chmod).st_mode)[-3:] != '755':
-                    chmod(file_chmod)
+                    chmod(file_chmod, 0o755)
 
             print('{}(?){} Device will reboot now'.format(B, C))
             sleep(4)
