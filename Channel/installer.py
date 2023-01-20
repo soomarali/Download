@@ -6,7 +6,7 @@ from __future__ import print_function
 
 import tarfile
 from datetime import datetime
-from os import chdir, chmod, remove, system, uname
+from os import chdir, chmod, remove, stat, system, uname
 from os.path import exists, isfile, join
 from re import MULTILINE, findall
 from sys import version_info
@@ -157,23 +157,25 @@ net.ipv4.tcp_wmem = 4096 65536 8388608
 net.ipv4.tcp_tw_recycle = 0""")
             f.close()
 
-            if isfile(self.path_astra):
-                remove(self.path_astra)
+            for file_dir in [self.path_abertis, self.path_astra]:
+                if exists(file_dir):
+                    remove(file_dir)
+
             urlretrieve(
                 "".join([self.link, self.path_astra[11:]]), self.path_astra)
-            chmod(self.path_astra, 0o755)
 
-            if exists(self.path_abertis):
-                remove(self.path_abertis)
-
-            for name in ['armv7l', 'mips']:
+            for name in ['aarch64', 'armv7l', 'mips', 'sh4']:
                 if uname()[4] == name:
                     urlretrieve(
                         "".join([self.link, join('astra-sm/', name, self.path_abertis[19:])]), self.path_abertis)
-            chmod(self.path_abertis, 0o755)
+
+            for file_chmod in [self.path_abertis, self.path_astra]:
+                if oct(stat(file_chmod).st_mode)[-3:] != '755':
+                    chmod(file_chmod)
 
             print('{}(?){} Device will reboot now'.format(B, C))
-            system('sleep 5;init 6')
+            sleep(4)
+            system('reboot -f')
         else:
             print('{}(?){} Device will restart now'.format(B, C))
             system('systemctl restart enigma2')
