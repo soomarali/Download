@@ -53,7 +53,7 @@ fi
 ###################
 #  Install Plugin #
 echo "Insallling XcPlugin Forever plugin Please Wait ......"
-if [ $OSTYPE = "Opensource" ]; then
+if [ "$OSTYPE" = "Opensource" ]; then
     wget $MY_URL/${PACKAGE}_"${VERSION}"_all.ipk -qP $TMPDIR
     $OPKGINSTAL $TMPDIR/${PACKAGE}_"${VERSION}"_all.ipk
 else
@@ -79,7 +79,7 @@ echo "**                                                                        
 echo "****************************************************************************************"
 echo ""
 
-if [ $OSTYPE = "Opensource" ]; then
+if [ "$OSTYPE" = "Opensource" ]; then
     killall -9 enigma2
 else
     systemctl restart enigma2
