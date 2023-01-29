@@ -89,8 +89,8 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
     def delete(self):
         print('{}(?){} Now It Will be deleted Old Settings And Add The New'.format(B, C))
 
-        for file in ['lamedb', '*list', '*.tv', '*.radio', 'satellites.xml']:
-            if file != 'satellites.xml':
+        for file in ['lamedb', '*list', '*.tv', '*.radio', '*.xml']:
+            if file != '*.xml':
                 self.path_dir = '/etc/enigma2/'
             else:
                 self.path_dir = '/etc/tuxbox/'
