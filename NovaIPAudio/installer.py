@@ -59,7 +59,7 @@ class IPaudio():
 
     def banner(self):
         system('clear')
-        print(B,r"""
+        print(B, r"""
 8888888 8888888b.     d8888               888 d8b
   888   888   Y88b   d88888               888 Y8P
   888   888    888  d88P888               888

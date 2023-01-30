@@ -4,7 +4,6 @@
 from os import chdir, popen, remove, system
 from os.path import isfile, join
 from re import MULTILINE, findall
-from socket import gethostname
 from sys import version_info
 from time import sleep
 
@@ -29,7 +28,6 @@ class NovalerTV():
     page = "https://github.com/MOHAMED19OS/Download/tree/main/NovalerTV"
 
     def __init__(self):
-        self.hostname = gethostname()
         self.package = ['python-core', 'python-image', 'python-json',
                         'python-multiprocessing', 'python-requests', 'python-imaging', 'enigma2-plugin-systemplugins-serviceapp', 'exteplayer3', 'gstplayer', 'ffmpeg']
 
@@ -65,8 +63,7 @@ d8b   db  .d88b.  db    db  .d8b.  db      d88888b d8888b. d888888b db    db
 88V8o 88 88    88 Y8    8P 88ooo88 88      88ooooo 88oobY'    88    Y8    8P
 88 V8o88 88    88 `8b  d8' 88~~~88 88      88~~~~~ 88`8b      88    `8b  d8'
 88  V888 `8b  d8'  `8bd8'  88   88 88booo. 88.     88 `88.    88     `8bd8'
-VP   V8P  `Y88P'     YP    YP   YP Y88888P Y88888P 88   YD    YP       YP
-""", C)
+VP   V8P  `Y88P'     YP    YP   YP Y88888P Y88888P 88   YD    YP       YP """, C)
 
     def check(self, pkg):
         with open(self.status) as file:
@@ -104,11 +101,16 @@ VP   V8P  `Y88P'     YP    YP   YP Y88888P Y88888P 88   YD    YP       YP
             remove(join('/tmp/', file))
             sleep(0.8)
 
-        if self.version(file.split('_')[0].replace('-python2', '')) == file.split('_')[1]:
+        version_stb = self.version(file.split('_')[0].replace('-python2', ''))
+
+        if version_stb == file.split('_')[1]:
             system('clear')
             print('you are use the latest version: {}{}{}\n'.format(
                 Y, file.split('_')[1], C).capitalize())
             sleep(0.8)
+            print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
+            exit()
+        elif version_stb > file.split('_')[1]:
             print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
