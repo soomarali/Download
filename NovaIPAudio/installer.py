@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # code BY: MOHAMED_OS
 
+from __future__ import print_function
+
 from os import chdir, popen, remove, system
 from os.path import isfile, join
 from re import MULTILINE, findall
