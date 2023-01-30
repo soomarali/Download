@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# code: BY MOHAMED_OS
+# code BY: MOHAMED_OS
 
-
-from json import loads
 from os import chdir, popen, remove, system
-from os.path import isfile
+from os.path import isfile, join
+from re import MULTILINE, findall
+from socket import gethostname
 from sys import version_info
 from time import sleep
 
@@ -16,7 +16,6 @@ else:
 
     from urllib2 import HTTPError, Request, URLError, urlopen
 
-
 # colors
 C = "\033[0m"     # clear (end)
 R = "\033[0;31m"  # red (error)
@@ -24,104 +23,117 @@ G = "\033[0;32m"  # green (process)
 B = "\033[0;36m"  # blue (choice)
 Y = "\033[0;33m"  # yellow (info)
 
-URL = 'https://raw.githubusercontent.com/MOHAMED19OS/Download/main/NovalerTV/'
 
-package = 'enigma2-plugin-extensions-novalertv'
+class NovalerTV():
+    URL = 'https://raw.githubusercontent.com/MOHAMED19OS/Download/main/NovalerTV/'
+    page = "https://github.com/MOHAMED19OS/Download/tree/main/NovalerTV"
 
+    def __init__(self):
+        self.hostname = gethostname()
+        self.package = ['python-core', 'python-image', 'python-json',
+                        'python-multiprocessing', 'python-requests', 'python-imaging', 'enigma2-plugin-systemplugins-serviceapp', 'exteplayer3', 'gstplayer', 'ffmpeg']
 
-def Image():
-    global status, update, install, uninstall
-    if isfile('/etc/opkg/opkg.conf'):
-        status = '/var/lib/opkg/status'
-        update = 'opkg update >/dev/null 2>&1'
-        install = 'opkg install'
-        uninstall = 'opkg remove --force-depends'
-    return isfile('/etc/opkg/opkg.conf')
+        if version_info[0] == 3:
+            self.package = list(
+                map(lambda x: x.replace('python', 'python3').replace('python3-imaging', 'python3-pillow'), self.package))
 
+    def Stb_Image(self):
+        if isfile('/etc/opkg/opkg.conf'):
+            self.status = '/var/lib/opkg/status'
+            self.update = 'opkg update >/dev/null 2>&1'
+            self.install = 'opkg install'
+            self.uninstall = 'opkg remove --force-depends'
 
-def info(item):
-    try:
-        req = Request('{}version.json'.format(URL))
-        req.add_header(
-            'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
-        response = urlopen(req)
-        link = loads(response.read()).get(item)
-        if item == 'depends':
-            if version_info[0] == 3:
-                return list(map(lambda x: x.replace('python', 'python3').replace('python3-imaging', 'python3-pillow'), link))
-        return link
-    except HTTPError as e:
-        print('HTTP Error code: ', e.code)
-    except URLError as e:
-        print('URL Error: ', e.reason)
+    def info(self, name):
+        try:
+            req = Request(self.page)
+            req.add_header(
+                'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
+            response = urlopen(req)
+            link = response.read().decode('utf-8')
+            return findall(r"".join(['href=.*?\/NovalerTV.*?">.*?(.*?', name, '.*?)<']), link)[0]
+        except HTTPError as e:
+            print('HTTP Error code: ', e.code)
+        except URLError as e:
+            print('URL Error: ', e.reason)
 
-
-def check():
-    package_list = info('depends')
-    with open(status) as f:
-        for c in f.readlines():
-            if c.startswith('Package:'):
-                pkg = c[c.index(' '):].strip()
-                while (package_list.count(pkg)):
-                    package_list.remove(pkg)
-    return package_list
-
-
-def version():
-    return popen("opkg info {} | grep Version | awk '{{print $2}}'".format(package)).read().strip()
-
-
-def main():
-    if not Image():
-        print('\n{}(!){}sorry image not supported!!\n'.format(R, C).capitalize())
-        sleep(0.8)
-        print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
-        exit(0)
-
-    if check():
-        system(update)
-        for name in check():
-            system('clear')
-            print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
-                G, C, Y, name, C))
-            system(" ".join([install, name]))
-            sleep(1)
-
-    if version_info[0] == 3:
-        file = "".join([package, "_py3_{}_all.ipk".format(info('version'))])
-    else:
-        file = "".join([package, "_py2_{}_all.ipk".format(info('version'))])
-
-    chdir('/tmp')
-
-    if isfile(file):
-        remove(file)
-        sleep(0.8)
-
-    if version() == info('version'):
+    def banner(self):
         system('clear')
-        print('you are use the latest version: {}{}{}\n'.format(
-            Y, info('version'), C).capitalize())
+        print(B, r""""
+888b    888                            888              88888888888 888     888
+8888b   888                            888                  888     888     888
+88888b  888                            888                  888     888     888
+888Y88b 888  .d88b.  888  888  8888b.  888  .d88b.  888d888 888     Y88b   d88P
+888 Y88b888 d88""88b 888  888     "88b 888 d8P  Y8b 888P"   888      Y88b d88P
+888  Y88888 888  888 Y88  88P .d888888 888 88888888 888     888       Y88o88P
+888   Y8888 Y88..88P  Y8bd8P  888  888 888 Y8b.     888     888        Y888P
+888    Y888  "Y88P"    Y88P   "Y888888 888  "Y8888  888     888         Y8P
+""", C)
+
+    def check(self, pkg):
+        with open(self.status) as file:
+            for item in file.readlines():
+                if item.startswith('Package:'):
+                    if findall(pkg, item[item.index(' '):].strip(), MULTILINE):
+                        return True
+            file.close()
+
+    def version(self, name):
+        return popen("opkg info {} | grep Version | awk '{{print $2}}'".format(name)).read().strip()
+
+    def main(self):
+        self.Stb_Image()
+
+        for filename in self.package:
+            if not self.check(filename):
+                system(self.update)
+                system('clear')
+                print("   >>>>   {}Please Wait{} while we Install {}{}{} ...".format(
+                    G, C, Y, filename, C))
+                system(" ".join([self.install, filename]))
+                sleep(1)
+
+        system('clear')
+        self.banner()
+        sleep(2)
+
+        if version_info[0] == 3:
+            file = self.info('python3')
+        else:
+            file = self.info('python2')
+
+        if isfile(join('/tmp/', file)):
+            remove(join('/tmp/', file))
+            sleep(0.8)
+
+        if self.version(file.split('_')[0]) == file.split('_')[1]:
+            system('clear')
+            print('you are use the latest version: {}{}{}\n'.format(
+                Y, file.split('_')[1], C).capitalize())
+            sleep(0.8)
+            print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
+            exit()
+        else:
+            system("".join([self.uninstall, file.split('_')[0]]))
+
+        system('clear')
+        print("{}Please Wait{} while we Download And Install {}NovalerTV{} ...".format(
+            G, C, Y, C))
+
+        chdir('/tmp')
+
+        urlretrieve("".join([self.URL, file]), filename=file)
         sleep(0.8)
-        print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
-        exit()
-    else:
-        system("".join([uninstall, package]))
 
-    system('clear')
-    print("{}Please Wait{} while we Download And Install {}Novaler TV{} ...".format(
-        G, C, Y, C))
+        system(" ".join([self.install, file]))
+        sleep(1)
 
-    urlretrieve("".join([URL, file]), filename=file)
-    sleep(0.8)
-
-    system(" ".join([install, file]))
-    sleep(1)
-
-    system('killall -9 enigma2')
+        if isfile(join('/tmp/', file)):
+            remove(join('/tmp/', file))
+            sleep(0.8)
 
 
 if __name__ == '__main__':
-    Image()
-    main()
-    print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
+    build = NovalerTV()
+    build.main()
+    print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)".format(R, C))
