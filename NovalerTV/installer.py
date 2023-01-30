@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # code BY: MOHAMED_OS
 
+from __future__ import print_function
+
 from os import chdir, popen, remove, system
 from os.path import isfile, join
 from re import MULTILINE, findall
@@ -108,10 +110,10 @@ VP   V8P  `Y88P'     YP    YP   YP Y88888P Y88888P 88   YD    YP       YP """, C
             print('you are use the latest version: {}{}{}\n'.format(
                 Y, file.split('_')[1], C).capitalize())
             sleep(0.8)
-            print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
+            print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         elif version_stb > file.split('_')[1]:
-            print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
+            print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
             system("".join([self.uninstall, file.split('_')[0]]))
