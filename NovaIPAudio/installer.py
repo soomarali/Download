@@ -124,7 +124,7 @@ class IPaudio():
             print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
-            system("".join([self.uninstall, file.split('_')[0]]))
+            system(" ".join([self.uninstall, file.split('_')[0]]))
 
         system('clear')
         print("{}Please Wait{} while we Download And Install {}NovaIPAudio{} ...".format(
