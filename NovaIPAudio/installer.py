@@ -118,6 +118,7 @@ class IPaudio():
 
         if self.check(old):
             system(" ".join([self.uninstall, old]))
+            sleep(4)
 
         if isfile(join('/tmp/', file)):
             remove(join('/tmp/', file))
