@@ -110,9 +110,11 @@ class IPaudio():
         if version_info[0] == 3:
             file = self.info('python3')
             old = 'enigma2-plugin-extensions-novaleripaudio-python3'
+            delete = '-python3'
         else:
             file = self.info('python2')
             old = 'enigma2-plugin-extensions-novaleripaudio-python2'
+            delete = '-python2'
 
         if self.check(old):
             system(" ".join([self.uninstall, old]))
@@ -121,7 +123,7 @@ class IPaudio():
             remove(join('/tmp/', file))
             sleep(0.8)
 
-        if self.version(file.split('_')[0]) == file.split('_')[1]:
+        if self.version(file.split('_')[0].replace(delete, '')) == file.split('_')[1]:
             system('clear')
             print('you are use the latest version: {}{}{}\n'.format(
                 Y, file.split('_')[1], C).capitalize())
