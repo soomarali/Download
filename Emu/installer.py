@@ -90,20 +90,6 @@ class Emulator():
                         return True
             file.close()
 
-    def image(self):
-        try:
-            if isfile('/etc/issue'):
-                distro = open(
-                    '/etc/issue').readlines()[-2].strip()[:-6].split()[0]
-                return distro.lower()
-            elif isfile('/usr/lib/enigma.info'):
-                distro = open('/usr/lib/enigma.info').readlines()
-                for c in distro:
-                    if match('distro', c):
-                        return c.split('=')[-1].strip().lower()
-        except:
-            return 'undefined'
-
     def prompt(self, choices):
 
         options = list(choices)
@@ -178,14 +164,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
             print("   >>>>   {}Please Wait{} while we Install {}libcurl4{} ...".format(
                 G, C, Y, C))
             system('{};{} libcurl4'.format(self.update, self.install))
-
-        if self.image() == 'teamblue':
-            if not self.check('enigma2-plugin-systemplugins-softcamstartup'):
-                system('clear')
-                print("   >>>>   {}Please Wait{} while we Install {}SoftCam Startup{} ...".format(
-                    G, C, Y, C))
-                system(
-                    '{};{} enigma2-plugin-systemplugins-softcamstartup'.format(self.update, self.install))
 
         if self.Stb_Image():
             cam = {
