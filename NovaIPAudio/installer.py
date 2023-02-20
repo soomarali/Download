@@ -109,22 +109,20 @@ class IPaudio():
 
         if version_info[0] == 3:
             file = self.info('python3')
-            old = 'enigma2-plugin-extensions-novaleripaudio-python3'
-            delete = '-python3'
         else:
             file = self.info('python2')
-            old = 'enigma2-plugin-extensions-novaleripaudio-python2'
-            delete = '-python2'
 
-        if self.check(old):
-            system(" ".join([self.uninstall, old]))
-            sleep(4)
+        Old_File = file.split('_')[0].replace('ipaudioplus', 'novaleripaudio')
+
+        if self.check(Old_File):
+            system(" ".join([self.uninstall, Old_File]))
+            sleep(6)
 
         if isfile(join('/tmp/', file)):
             remove(join('/tmp/', file))
             sleep(0.8)
 
-        if self.version(file.split('_')[0].replace(delete, '')) == file.split('_')[1]:
+        if self.version(file.split('_')[0][:37]) == file.split('_')[1]:
             system('clear')
             print('you are use the latest version: {}{}{}\n'.format(
                 Y, file.split('_')[1], C).capitalize())
@@ -132,7 +130,7 @@ class IPaudio():
             print("   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
-            system(" ".join([self.uninstall, file.split('_')[0]]))
+            system(" ".join([self.uninstall, file.split('_')[0][:37]]))
 
         system('clear')
         print("{}Please Wait{} while we Download And Install {}NovaIPAudio{} ...".format(
