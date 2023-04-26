@@ -78,7 +78,7 @@ class RakutenTV():
     def main(self):
         self.Stb_Image()
 
-        file = self.info
+        file = self.info()
 
         for filename in self.package:
             if not self.check(filename):
@@ -128,6 +128,10 @@ class RakutenTV():
         if isfile(join('/tmp/', file)):
             remove(join('/tmp/', file))
             sleep(0.8)
+
+        if self.Stb_Image():
+            print('{}(?){} Device will restart now'.format(B, C))
+            system('killall -9 enigma2')
 
 
 if __name__ == '__main__':
