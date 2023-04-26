@@ -41,6 +41,7 @@ class RakutenTV():
             self.status = '/var/lib/opkg/status'
             self.update = 'opkg update >/dev/null 2>&1'
             self.install = 'opkg install'
+            self.list = 'opkg list-installed'
             self.uninstall = 'opkg remove --force-depends'
 
     def info(self):
@@ -73,7 +74,7 @@ class RakutenTV():
             file.close()
 
     def version(self, name):
-        return popen("opkg info {} | grep Version | awk '{{print $2}}'".format(name)).read().strip()
+        return popen("{} | grep {} | awk '{{print $3}}'".format(self.list,name)).read().strip()
 
     def main(self):
         self.Stb_Image()
