@@ -40,7 +40,7 @@ elif [ "$PYTHON_VERSION" == 3.10.4 ]; then
     echo ":You have Python3.10 image ..."
     PLUGINPY4='E2IPLAYER_TSiplayer-PYTHON310.tar.gz'
     rm -rf ${TMPDIR}/"${PLUGINPY4:?}"
-elif [ "$PYTHON_VERSION" == 3.11.0 ]; then
+elif [ "$PYTHON_VERSION" == 3.11.0 ] || [ "$PYTHON_VERSION" == 3.11.2 ]; then
     echo ":You have $PYTHON_VERSION image ..."
     PLUGINPY5='E2IPLAYER_TSiplayer-PYTHON311.tar.gz'
     rm -rf ${TMPDIR}/"${PLUGINPY5:?}"
@@ -110,7 +110,7 @@ elif [ "$PYTHON_VERSION" == 3.10.4 ]; then
     wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY4" -qP $TMPDIR
     tar -xzf $TMPDIR/"$PLUGINPY4" -C /
     set +e
-elif [ "$PYTHON_VERSION" == 3.11.0 ]; then
+elif [ "$PYTHON_VERSION" == 3.11.0 ] || [ "$PYTHON_VERSION" == 3.11.2 ]; then
     set -e
     echo
     wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY5" -qP $TMPDIR
@@ -154,7 +154,7 @@ if [ "$PYTHON_VERSION" == 3.9.9 ] || [ "$PYTHON_VERSION" == 3.9.7 ]; then
     rm -rf ${TMPDIR}/"${PLUGINPY3:?}"
 elif [ "$PYTHON_VERSION" == 3.10.4 ]; then
     rm -rf ${TMPDIR}/"${PLUGINPY4:?}"
-elif [ "$PYTHON_VERSION" == 3.11.0 ]; then
+elif [ "$PYTHON_VERSION" == 3.11.0 ] || [ "$PYTHON_VERSION" == 3.11.2 ]; then
     rm -rf ${TMPDIR}/"${PLUGINPY5:?}"
 else
     rm -rf ${TMPDIR}/"${PLUGINPY2:?}"
