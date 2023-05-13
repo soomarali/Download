@@ -11,6 +11,7 @@
 # Configure where we can find things here #
 TMPDIR='/tmp'
 VERSION='4.1'
+PACKAGE='enigma2-plugin-extensions-suptv'
 MY_URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Suptv'
 
 ####################
