@@ -100,7 +100,7 @@ class Novacam():
 
         print(menu, '\n')
 
-        self.cam = {"1": "suptv-activator", "2": "pr-suptv"}
+        self.cam = {"1": "suptv-free", "2": "pr-suptv"}
 
     def main(self):
         self.Stb_Image()
