@@ -12,11 +12,11 @@
 TMPDIR='/tmp'
 PLUGINPATH='/usr/lib/enigma2/python/Plugins/Extensions/IPTVPlayer'
 SETTINGS='/etc/enigma2/settings'
-URL='http://ipkinstall.ath.cx/ipk-install'
+URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/E2IPLAYER_TSiplayer'
 PYTHON_VERSION=$(python -c"import platform; print(platform.python_version())")
 
 #########################
-VERSION=$(wget $URL/E2IPLAYER-DREAMSATPANEL/e2iplayer.sh -qO- | grep 'versions=' | cut -d "=" -f2- | sed 's/^"\(.*\)".*/\1/')
+VERSION=$(wget $URL/version -qO- | cut -d "=" -f2-)
 
 ########################
 if [ -f /etc/opkg/opkg.conf ]; then
@@ -164,7 +164,6 @@ echo ""
 echo "***********************************************************************"
 echo "**                                                                    *"
 echo "**                       TSIPlayer  : $VERSION                      *"
-echo "**                       Uploaded by: LINUXSAT                        *"
 echo "**                       Script by  : MOHAMED_OS                      *"
 echo "**                       Develop by : rgysoft                         *"
 echo "**  Support    : https://www.tunisia-sat.com/forums/threads/3951696/  *"
