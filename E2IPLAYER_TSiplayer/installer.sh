@@ -12,7 +12,7 @@
 TMPDIR='/tmp'
 PLUGINPATH='/usr/lib/enigma2/python/Plugins/Extensions/IPTVPlayer'
 SETTINGS='/etc/enigma2/settings'
-URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/E2IPLAYER_TSiplayer'
+URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/E2IPLAYER_TSiplayer/'
 PYTHON_VERSION=$(python -c"import platform; print(platform.python_version())")
 
 #########################
@@ -101,25 +101,25 @@ echo "Downloading And Insallling IPTVPlayer plugin Please Wait ......"
 if [ "$PYTHON_VERSION" == 3.9.9 ] || [ "$PYTHON_VERSION" == 3.9.7 ]; then
     set -e
     echo
-    wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY3" -qP $TMPDIR
+    wget $URL/"$PLUGINPY3" -qP $TMPDIR
     tar -xzf $TMPDIR/"$PLUGINPY3" -C /
     set +e
 elif [ "$PYTHON_VERSION" == 3.10.4 ]; then
     set -e
     echo
-    wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY4" -qP $TMPDIR
+    wget $URL/"$PLUGINPY4" -qP $TMPDIR
     tar -xzf $TMPDIR/"$PLUGINPY4" -C /
     set +e
 elif [ "$PYTHON_VERSION" == 3.11.0 ] || [ "$PYTHON_VERSION" == 3.11.2 ]; then
     set -e
     echo
-    wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY5" -qP $TMPDIR
+    wget $URL/"$PLUGINPY5" -qP $TMPDIR
     tar -xzf $TMPDIR/"$PLUGINPY5" -C /
     set +e
 else
     set -e
     echo
-    wget $URL/E2IPLAYER-DREAMSATPANEL/"$PLUGINPY2" -qP $TMPDIR
+    wget $URL/"$PLUGINPY2" -qP $TMPDIR
     tar -xzf $TMPDIR/"$PLUGINPY2" -C /
     set +e
 fi
