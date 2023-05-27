@@ -6,7 +6,7 @@ from __future__ import print_function
 from os import chdir, popen, remove, system
 from os.path import isdir, isfile, join
 from re import MULTILINE, findall
-from shutil import copyfile, move
+from shutil import move
 from sys import version_info
 from time import sleep
 
@@ -43,11 +43,13 @@ class FootOnsat():
             self.status = '/var/lib/opkg/status'
             self.update = 'opkg update >/dev/null 2>&1'
             self.install = 'opkg install'
+            self.list = 'opkg list'
             self.uninstall = 'opkg remove --force-depends'
         elif isfile('/var/lib/dpkg/status'):
             self.status = '/var/lib/dpkg/status'
             self.update = 'apt-get update >/dev/null 2>&1'
             self.install = 'apt-get install -y'
+            self.list = 'apt-get list'
             self.uninstall = 'apt-get purge --auto-remove'
         return isfile('/etc/opkg/opkg.conf')
 
@@ -122,14 +124,16 @@ class FootOnsat():
             sleep(0.8)
             print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
+        elif version_stb == '':
+            pass
         elif version_stb > file.split('_')[1]:
             print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
             if isfile(join(self.plugin_path,'db/footonsat.db')):
                 print("Keep old db....")
-                copyfile('/usr/lib/enigma2/python/Plugins/Extensions/FootOnSat/db/footonsat.db','/tmp')
-            system("".join([self.uninstall, file.split('_')[0]]))
+                move('/usr/lib/enigma2/python/Plugins/Extensions/FootOnSat/db/footonsat.db','/tmp')
+            system(" ".join([self.uninstall, file.split('_')[0]]))
 
         system('clear')
         print("{}Please Wait{} while we Download And Install {}FootOnsat{} ...".format(
@@ -149,7 +153,9 @@ class FootOnsat():
 
         if isdir(self.plugin_path):
             if isfile('/tmp/footonsat.db'):
-                move('/tmp/footonsat.db',join(self.plugin_path,'db'))
+                if isfile(join(self.plugin_path,'db/footonsat.db')):
+                    remove(join(self.plugin_path,'db/footonsat.db'))
+                    move('/tmp/footonsat.db',join(self.plugin_path,'db'))
 
         print('{}(?){} Device will restart now'.format(B, C))
         if self.Stb_Image():
