@@ -34,8 +34,7 @@ class NovalerTV():
                         'python-multiprocessing', 'python-requests', 'python-imaging', 'enigma2-plugin-systemplugins-serviceapp', 'exteplayer3', 'gstplayer', 'ffmpeg']
 
         if version_info[0] == 3:
-            self.package = list(
-                map(lambda x: x.replace('python', 'python3').replace('python3-imaging', 'python3-pillow'), self.package))
+            self.package = list(map(lambda x: x.replace('python', 'python3').replace('python3-imaging', 'python3-pillow'), self.package))
 
     def Stb_Image(self):
         if isfile('/etc/opkg/opkg.conf'):
