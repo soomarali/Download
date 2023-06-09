@@ -36,8 +36,7 @@ class IPaudio():
                         'gstreamer1.0-plugins-good', 'python-core', 'python-cryptography', 'python-json', 'python-requests']
 
         if version_info[0] == 3:
-            self.package = list(
-                map(lambda x: x.replace('python', 'python3'), self.package))
+            self.package = list(map(lambda x: x.replace('python', 'python3'), self.package))
 
     def Stb_Image(self):
         if isfile('/etc/opkg/opkg.conf'):
