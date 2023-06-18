@@ -96,11 +96,11 @@ class Novacam():
         print("\n{}(?){} Choose the Plugin Install:".format(B, C))
 
         menu = """
-                    (1) NOVACAM - SUPTV FREE       (2) NOVACAM - SUPTV PREMIUM"""
+                    (1) NOVACAM - SUPREME       (2) NOVACAM - SUPTV PREMIUM"""
 
         print(menu, '\n')
 
-        self.cam = {"1": "suptv-free", "2": "pr-suptv"}
+        self.cam = {"1": "suptv-supreme", "2": "suptv-premium"}
 
     def main(self):
         self.Stb_Image()
