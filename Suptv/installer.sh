@@ -14,13 +14,11 @@ TMPDIR='/tmp'
 PACKAGE='enigma2-plugin-extensions-suptv'
 MY_URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Suptv'
 
-for name in 'novaler4k' 'novaler4kse' 'multibox' 'multiboxse'; do
-    if uname -n | grep -qs ${name}; then
-        VERSION='4.3.2-r0'
-    else
-        VERSION='4.1'
-    fi
-done
+if uname -n | grep -qs "^novaler4k" || uname -n | grep -qs "^multibox"; then
+    VERSION='4.3.2-r0'
+else
+    VERSION='4.1'
+fi
 ####################
 #  Image Checking  #
 if [ -f /etc/opkg/opkg.conf ]; then
