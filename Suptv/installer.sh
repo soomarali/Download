@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 # ###########################################
 # SCRIPT : DOWNLOAD AND INSTALL Suptv
 # ###########################################
@@ -10,10 +11,16 @@
 ###########################################
 # Configure where we can find things here #
 TMPDIR='/tmp'
-VERSION='4.1'
 PACKAGE='enigma2-plugin-extensions-suptv'
 MY_URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Suptv'
 
+for name in 'novaler4k' 'novaler4kse' 'multibox' 'multiboxse'; do
+    if uname -n | grep -qs ${name}; then
+        VERSION='4.3.2-r0'
+    else
+        VERSION='4.1'
+    fi
+done
 ####################
 #  Image Checking  #
 if [ -f /etc/opkg/opkg.conf ]; then
@@ -33,7 +40,7 @@ fi
 # Remove previous files (if any) #
 rm -rf $TMPDIR/"${PACKAGE:?}"* >/dev/null 2>&1
 
-if [ "$($OPKGLIST "$PACKAGE" | awk '{ print $3 }')" = $VERSION ]; then
+if [ "$($OPKGLIST "$PACKAGE" | awk '{ print $3 }')" = "$VERSION" ]; then
     echo " You are use the laste Version: $VERSION"
     exit 1
 elif [ -z "$($OPKGLIST "$PACKAGE" | awk '{ print $3 }')" ]; then
@@ -50,11 +57,11 @@ $OPKG >/dev/null 2>&1
 echo "Insallling Suptv plugin Please Wait ......"
 
 if [ "$OSTYPE" = "Opensource" ]; then
-    wget $MY_URL/"${PACKAGE}"_${VERSION}_all.ipk -qP $TMPDIR
-    $OPKGINSTAL $TMPDIR/"${PACKAGE}"_${VERSION}_all.ipk
+    wget $MY_URL/"${PACKAGE}"_"${VERSION}"_all.ipk -qP $TMPDIR
+    $OPKGINSTAL $TMPDIR/"${PACKAGE}"_"${VERSION}"_all.ipk
 elif [ "$OSTYPE" = "DreamOS" ]; then
-    wget $MY_URL/"${PACKAGE}"_${VERSION}_all.deb -qP $TMPDIR
-    $DPKINSTALL $TMPDIR/"${PACKAGE}"_${VERSION}.deb
+    wget $MY_URL/"${PACKAGE}"_"${VERSION}"_all.deb -qP $TMPDIR
+    $DPKINSTALL $TMPDIR/"${PACKAGE}"_"${VERSION}"_all.deb
     $OPKGINSTAL -f -y
 
 fi
