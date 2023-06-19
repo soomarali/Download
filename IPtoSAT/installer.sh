@@ -7,6 +7,12 @@
 #
 # ###########################################
 
+# Colors
+Color_Off='\e[0m'
+Red='\e[0;31m'
+Green='\e[0;32m'
+Yellow='\e[0;33m'
+
 ###########################################
 # Configure where we can find things here #
 TMPDIR='/tmp'
@@ -15,6 +21,7 @@ pyVersion=$(python -c"from sys import version_info; print(version_info[0])")
 
 #########################
 if uname -n | grep -qs "^novaler4k" || uname -n | grep -qs "^multibox"; then
+    Develop='Novaler'
     VERSION='1.3-r0'
     PACKAGE='enigma2-plugin-extensions-ipsat'
     arrVar=("ffmpeg" "libc6" "enigma2-plugin-systemplugins-serviceapp" "exteplayer3" "gstplayer" "gstreamer1.0" "libglib-2.0-0")
@@ -25,6 +32,7 @@ if uname -n | grep -qs "^novaler4k" || uname -n | grep -qs "^multibox"; then
         arrVar+=("python-core" "python-cryptography" "python-requests")
     fi
 else
+    Develop='ZAKARIYA KHA'
     VERSION='1.8'
     PACKAGE='enigma2-plugin-extensions-iptosat'
 fi
@@ -96,14 +104,35 @@ else
 fi
 
 #########################
-echo "Insallling IPtoSAT plugin Please Wait ......"
+clear
+echo -e "${Yellow}" "Downloading IPToSAT plugin Please Wait ......" "${Color_Off}"
 if [ "${OSTYPE}" = "Opensource" ]; then
     wget $MY_URL/${PACKAGE}_"${VERSION}"_all.ipk -qP $TMPDIR
+else
+    wget $MY_URL/${PACKAGE}_"${VERSION}".deb -qP $TMPDIR
+fi
+if [ $? -gt 0 ]; then
+    echo -e "${Red}" "error downloading file, end" "${Color_Off}"
+    exit 1
+else
+    echo -e "${Green}" "File downloaded" "${Color_Off}"
+fi
+
+if [ "${OSTYPE}" = "Opensource" ]; then
     $OPKGINSTAL $TMPDIR/${PACKAGE}_"${VERSION}"_all.ipk
 else
     wget $MY_URL/${PACKAGE}_"${VERSION}".deb -qP $TMPDIR
-    $DPKINSTALL $TMPDIR/${PACKAGE}_"${VERSION}".deb
     $OPKGINSTAL -f -y
+fi
+
+if [ $? -gt 0 ]; then
+    echo -e "${Red}" "error install plugin IPToSat, end" "${Color_Off}"
+else
+    echo -e "${Green}" "install plugin IPToSat" "${Color_Off}"
+    for dir in python2 python3; do
+        rm -rf "${TMPDIR}"/"${dir:?}"
+        sleep 1
+    done
 fi
 
 #########################
@@ -116,7 +145,7 @@ echo "***********************************************************************"
 echo "**                                                                    *"
 echo "**                       IPtoSAT    : $VERSION                             *"
 echo "**                       Uploaded by: MOHAMED_OS                      *"
-echo "**                       Develop by : ZAKARIYA KHA                    *"
+echo "**                       Develop by : $Develop                    *"
 echo "**  Support    : https://www.tunisia-sat.com/forums/threads/4171372/  *"
 echo "**                                                                    *"
 echo "***********************************************************************"
