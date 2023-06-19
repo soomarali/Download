@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # ###########################################
 # SCRIPT : DOWNLOAD AND INSTALL IPtoSAT
 # ###########################################
@@ -10,11 +10,24 @@
 ###########################################
 # Configure where we can find things here #
 TMPDIR='/tmp'
-PACKAGE='enigma2-plugin-extensions-iptosat'
 MY_URL='https://raw.githubusercontent.com/MOHAMED19OS/Download/main/IPtoSAT'
+pyVersion=$(python -c"from sys import version_info; print(version_info[0])")
 
 #########################
-VERSION=$(wget $MY_URL/version -qO- | cut -d "=" -f2-)
+if uname -n | grep -qs "^novaler4k" || uname -n | grep -qs "^multibox"; then
+    VERSION='1.3-r0'
+    PACKAGE='enigma2-plugin-extensions-ipsat'
+    arrVar=("ffmpeg" "libc6" "enigma2-plugin-systemplugins-serviceapp" "exteplayer3" "gstplayer" "gstreamer1.0" "libglib-2.0-0")
+
+    if [ "$pyVersion" = 3 ]; then
+        arrVar+=("python3-cryptography" "python3-requests")
+    else
+        arrVar+=("python-core" "python-cryptography" "python-requests")
+    fi
+else
+    VERSION='1.8'
+    PACKAGE='enigma2-plugin-extensions-iptosat'
+fi
 
 #########################
 if [ -f /etc/opkg/opkg.conf ]; then
@@ -36,17 +49,17 @@ fi
 
 #########################
 install() {
-    if grep -qs "Package: $1" $STATUS; then
+    if grep -qs "Package: $1" "${STATUS}"; then
         echo
     else
         $OPKG >/dev/null 2>&1
         echo "   >>>>   Need to install $1   <<<<"
         echo
-        if [ $OSTYPE = "Opensource" ]; then
+        if [ "${OSTYPE}" = "Opensource" ]; then
             $OPKGINSTAL "$1"
             sleep 1
             clear
-        elif [ $OSTYPE = "DreamOS" ]; then
+        elif [ "${OSTYPE}" = "DreamOS" ]; then
             $OPKGINSTAL "$1" -y
             sleep 1
             clear
@@ -68,17 +81,23 @@ else
 fi
 
 #########################
-if [ $OSTYPE = "Opensource" ]; then
-    for i in exteplayer3 gstplayer; do
-        install $i
+if uname -n | grep -qs "^novaler4k" || uname -n | grep -qs "^multibox"; then
+    for i in "${arrVar[@]}"; do
+        install "$i"
     done
-elif [ $OSTYPE = "DreamOS" ]; then
-    install gstreamer1.0-plugins-base-apps
+else
+    if [ "${OSTYPE}" = "Opensource" ]; then
+        for i in exteplayer3 gstplayer; do
+            install $i
+        done
+    elif [ "${OSTYPE}" = "DreamOS" ]; then
+        install gstreamer1.0-plugins-base-apps
+    fi
 fi
 
 #########################
 echo "Insallling IPtoSAT plugin Please Wait ......"
-if [ $OSTYPE = "Opensource" ]; then
+if [ "${OSTYPE}" = "Opensource" ]; then
     wget $MY_URL/${PACKAGE}_"${VERSION}"_all.ipk -qP $TMPDIR
     $OPKGINSTAL $TMPDIR/${PACKAGE}_"${VERSION}"_all.ipk
 else
@@ -103,7 +122,7 @@ echo "**                                                                    *"
 echo "***********************************************************************"
 echo ""
 
-if [ $OSTYPE = "Opensource" ]; then
+if [ "${OSTYPE}" = "Opensource" ]; then
     killall -9 enigma2
 else
     systemctl restart enigma2
