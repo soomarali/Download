@@ -121,7 +121,7 @@ fi
 if [ "${OSTYPE}" = "Opensource" ]; then
     $OPKGINSTAL $TMPDIR/${PACKAGE}_"${VERSION}"_all.ipk
 else
-    wget $MY_URL/${PACKAGE}_"${VERSION}".deb -qP $TMPDIR
+    $DPKINSTALL $TMPDIR/${PACKAGE}_"${VERSION}".deb
     $OPKGINSTAL -f -y
 fi
 
