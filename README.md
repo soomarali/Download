@@ -2,7 +2,7 @@
 ### E2 Script For Enigma2
 
 ```fish
- python -c "$(wget https://raw.githubusercontent.com/MOHAMED19OS/e2script/main/e2script.py -qO -)"
+ python -c "$(wget https://raw.githubusercontent.com/soomarali/DreamScript/main/e2script.py -qO -)"
 ```
 **📣 NOTE : It is Drive For Download Plugin And Install In Your Enigma2.**
 
