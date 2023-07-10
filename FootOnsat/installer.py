@@ -45,7 +45,7 @@ class FootOnsat():
             self.install = 'opkg install'
             self.list = 'opkg list'
             self.uninstall = 'opkg remove --force-depends'
-        elif isfile('/var/lib/dpkg/status'):
+        elif isfile('/etc/apt/apt.conf'):
             self.status = '/var/lib/dpkg/status'
             self.update = 'apt-get update >/dev/null 2>&1'
             self.install = 'apt-get install -y'
@@ -54,14 +54,16 @@ class FootOnsat():
         return isfile('/etc/opkg/opkg.conf')
 
 
-    def info(self,extension):
+    def info(self):
         try:
             req = Request(self.page)
             req.add_header(
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall(r"".join(['href=.*?\/FootOnsat\/enigma2-plugin-extensions-footonsat.*?\.',extension,'">.*?(.*?)</a>']), link)[0]
+            data_deb = findall('<script type=.*?deb","path":"FootOnsat/(.+?)"',link)[0]
+            data_ipk = findall('<script type=.*?ipk","path":"FootOnsat/(.+?)"',link)[0]
+            return data_deb,data_ipk
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
@@ -93,9 +95,9 @@ class FootOnsat():
         self.Stb_Image()
 
         if self.Stb_Image():
-            file = self.info('ipk')
+            file = self.info()[1]
         else:
-            file = self.info('deb')
+            file = self.info()[0]
 
         for filename in self.package:
             if not self.check(filename):
