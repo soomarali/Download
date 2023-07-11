@@ -51,6 +51,7 @@ class NovalerTV():
             response = urlopen(req)
             link = response.read().decode('utf-8')
             data_ = findall('NovalerTV/(.+?)"', link)
+            data_.remove("installer.py")
             return data_
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
