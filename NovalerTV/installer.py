@@ -50,7 +50,8 @@ class NovalerTV():
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall(r"".join(['href=.*?\/NovalerTV.*?">.*?(.*?', name, '.*?)<']), link)[0]
+            data_ = findall('NovalerTV/(.+?)"', link)
+            return data_
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
@@ -94,9 +95,9 @@ VP   V8P  `Y88P'     YP    YP   YP Y88888P Y88888P 88   YD    YP       YP """, C
         sleep(2)
 
         if version_info[0] == 3:
-            file = self.info('python3')
+            file = self.info()[1]
         else:
-            file = self.info('python2')
+            file = self.info()[0]
 
         if isfile(join('/tmp/', file)):
             remove(join('/tmp/', file))
