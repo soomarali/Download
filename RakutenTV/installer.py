@@ -51,7 +51,8 @@ class RakutenTV():
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall('href=.*?\/RakutenTV\/enigma2-plugin-extensions-rakutentv.*?">.*?(.*?)</a>', link)[0]
+            data_ = findall('<script type=.*?ipk","path":"RakutenTV/(.+?)"',link)[0]
+            return data_
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
