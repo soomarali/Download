@@ -5,7 +5,7 @@ from __future__ import print_function
 
 from os import chdir, chmod, popen, remove, system
 from os.path import exists, isfile, join
-from re import MULTILINE, findall, match
+from re import MULTILINE, findall
 from sys import version_info
 from time import sleep
 
@@ -61,7 +61,7 @@ class Emulator():
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall(r"".join(['href=.*?\/Emu.*?">.*?', name, '_(.*?)_']), link)[0]
+            return findall(r"".join(['Emu/.+?-', name, '_(.*?)_']), link)[0]
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
