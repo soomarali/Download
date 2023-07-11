@@ -45,14 +45,15 @@ class IPaudio():
             self.install = 'opkg install'
             self.uninstall = 'opkg remove --force-depends'
 
-    def info(self, name):
+    def info(self):
         try:
             req = Request(self.page)
             req.add_header(
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall(r"".join(['href=.*?\/NovaIPAudio.*?">.*?(.*?', name, '.*?)<']), link)[0]
+            data_ = findall('NovaIPAudio/(.+?)"', link)
+            return data_
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
@@ -107,9 +108,9 @@ class IPaudio():
         sleep(2)
 
         if version_info[0] == 3:
-            file = self.info('python3')
+            file = self.info()[1]
         else:
-            file = self.info('python2')
+            file = self.info()[0]
 
         Old_File = file.split('_')[0].replace('ipaudioplus', 'novaleripaudio')
 
