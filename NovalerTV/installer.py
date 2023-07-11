@@ -43,7 +43,7 @@ class NovalerTV():
             self.install = 'opkg install'
             self.uninstall = 'opkg remove --force-depends'
 
-    def info(self, name):
+    def info(self):
         try:
             req = Request(self.page)
             req.add_header(

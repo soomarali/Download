@@ -33,7 +33,6 @@ class Setting():
     page = 'https://github.com/MOHAMED19OS/Download/tree/main/Channel'
 
     def __init__(self):
-        self.file_info = []
         self.date = datetime.now().strftime("%d-%m-%Y %X")
         self.path_abertis = '/etc/astra/scripts/abertis'
         self.path_astra = '/etc/astra/astra.conf'
@@ -64,12 +63,9 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            self.version = findall(
-                r'href=.*?\/Channel.*?">channels_backup_user_(.*?).tar.gz', link)[0]
-            self.file_tar = findall(
-                r'href=.*?\/Channel\/channels.*?">(.*?)<', link)[0]
-            for name in [self.version, self.file_tar]:
-                self.file_info.append(name)
+            data_version = findall('tar.gz","path":"Channel/channels_backup_user_(.+?).tar.gz"', link)[0]
+            data_name = findall('tar.gz","path":"Channel/(.+?)"', link)[0]
+            return data_version, data_name
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
@@ -112,8 +108,8 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
 
         chdir('/tmp')
 
-        if isfile(self.file_info[-1]):
-            remove(self.file_info[-1])
+        if isfile(self.info()[1]):
+            remove(self.info()[1])
 
         system('clear')
         self.banner()
@@ -122,19 +118,19 @@ Y88b  d88P 888  888 888  888 888  888 888  888 Y8b.     888
             Y, C, R, C, G, C))
 
         try:
-            urlretrieve("".join([self.link, self.file_info[-1]]),
-                        filename=self.file_info[-1])
+            urlretrieve("".join([self.link, self.info()[1]]),
+                        filename=self.info()[1])
 
             self.delete()
             sleep(0.8)
 
-            with tarfile.open(self.file_info[-1]) as tar_ref:
+            with tarfile.open(self.info()[1]) as tar_ref:
                 for member in tar_ref.getmembers():
                     tar_ref.extract(member, "/")
             tar_ref.close()
 
-            if isfile(self.file_info[-1]):
-                remove(self.file_info[-1])
+            if isfile(self.info()[1]):
+                remove(self.info()[1])
         except:
             print('No File Found')
             exit()
