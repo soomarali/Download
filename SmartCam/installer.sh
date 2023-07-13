@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # ==============================================
-# SCRIPT : DOWNLOAD AND INSTALL SmartCam #
+# SCRIPT : DOWNLOAD AND INSTALL  #SmartCam
 # =====================================================================================================================
-# Command: wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -O - | /bin/sh #
+# Command: wget https://raw.githubusercontent.com/biko-73/EvgQuickSignal/main/installer.sh -O - | /bin/sh #
 # =====================================================================================================================
 
 PACKAGE_DIR='soomarali/Download/main/SmartCam'
-MY_IPK="enigma2-smartcam_11.572_all.ipk"
+MY_IPK="enigma2-plugin-extensions-evgquicksignal_1.2_all.ipk"
 
 MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/"
 if which opkg > /dev/null 2>&1; then
@@ -27,7 +27,7 @@ echo ''
 echo '****************************************************************************'
 echo '**                                 STARTED                                **'
 echo '****************************************************************************'
-echo "**                            Uploaded by: ASGHAR_ALI                     **"
+echo "**                            Uploaded by: Biko_73                        **"
 echo "**  https://www.tunisia-sat.com/forums/threads/4264626/#post-1055273465   **"
 echo "****************************************************************************"
 echo ''
