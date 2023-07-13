@@ -20,7 +20,7 @@ MY_DEB="enigma2-smartcam_11.572_all.deb"
 ########################################################################################################################
 
 # Decide : which package ?
-MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/main/"
+MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/"
 if which dpkg > /dev/null 2>&1; then
 	MY_FILE=$MY_DEB
 	MY_URL=$MY_MAIN_URL$PACKAGE_DIR'/'$MY_DEB
