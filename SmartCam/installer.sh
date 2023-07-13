@@ -10,7 +10,7 @@
 # Plugin	... Enter Manually
 ########################################################################################################################
 
-PACKAGE_DIR='Download/main/SmartCam'
+PACKAGE_DIR='soomarali/Download/main/SmartCam'
 
 MY_IPK="enigma2-smartcam_11.572_all.ipk"
 MY_DEB="enigma2-smartcam_11.572_all.deb"
