@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ###########################################
-# SCRIPT : DOWNLOAD AND INSTALL Quran Karim
+# SCRIPT : DOWNLOAD AND INSTALL OSCAM SMARTCAM
 # ###########################################
 #
 # Command: wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -qO - | /bin/sh
