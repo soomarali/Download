@@ -6,7 +6,7 @@
 # Command: wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -O - | /bin/sh #
 # =====================================================================================================================
 
-PACKAGE_DIR='Download/main/SmartCam'
+PACKAGE_DIR='soomarali/Download/main/SmartCam'
 MY_IPK="enigma2-smartcam_11.572_all.ipk"
 
 MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/"
