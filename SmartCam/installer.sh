@@ -9,7 +9,7 @@ DESTINATION="/var/tmp/"
 # Download the file using wget
 wget -O "/var/tmp/enigma2-smartcam_11.572_all.ipk" "https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/enigma2-smartcam_11.572_all.ipk"
 
-opkg install "enigma2-smartcam_11.572_all.ipk"
+opkg install "/var/tmp/enigma2-smartcam_11.572_all.ipk"
 # Check the download status
 if [ $? -eq 0 ]; then
   echo "File downloaded successfully."
