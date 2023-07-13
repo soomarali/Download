@@ -16,7 +16,7 @@ URL_VER=''
 
 #################
 # Check Version #
-VERSION=$(wget $URL_VER/version -qO- | cut -d "=" -f2-)
+#VERSION=$(wget $URL_VER/version -qO- | cut -d "=" -f2-)
 
 ####################
 #  Image Checking  #
@@ -32,23 +32,23 @@ elif [ -f /etc/apt/apt.conf ]; then
     OPKGLIST='apt-get list-installed'
     OPKGREMOV='apt-get purge --auto-remove'
     DPKINSTALL='dpkg -i --force-overwrite'
-fi
+#fi
 
 ##################################
 # Remove previous files (if any) #
-rm -rf $TMPDIR/"${PACKAGE:?}"* >/dev/null 2>&1
+#rm -rf $TMPDIR/"${PACKAGE:?}"* >/dev/null 2>&1
 
 ######################
 #  Remove Old Plugin #
-if [ "$($OPKGLIST $PACKAGE | awk '{ print $3 }')" = "$VERSION" ]; then
+#if [ "$($OPKGLIST $PACKAGE | awk '{ print $3 }')" = "$VERSION" ]; then
     echo " You are use the laste Version: $VERSION"
-    exit 1
-elif [ -z "$($OPKGLIST $PACKAGE | awk '{ print $3 }')" ]; then
-    echo
+   # exit 1
+#elif [ -z "$($OPKGLIST $PACKAGE | awk '{ print $3 }')" ]; then
+#    echo
     clear
-else
+#else
     $OPKGREMOV $PACKAGE
-fi
+#fi
 
 ###################
 #  Install Plugin #
