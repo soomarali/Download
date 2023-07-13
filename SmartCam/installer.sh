@@ -1,9 +1,9 @@
 #!/bin/sh
 # ###########################################
-# SCRIPT : DOWNLOAD AND INSTALL XcPlugin Forever
+# SCRIPT : DOWNLOAD AND INSTALL SmartCam
 # ###########################################
 #
-# Command: wget https://raw.githubusercontent.com/MOHAMED19OS/Download/main/XC-Code/installer.sh -qO - | /bin/sh
+# Command: wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -qO - | /bin/sh
 #
 # ###########################################
 
@@ -11,7 +11,7 @@
 # Configure where we can find things here #
 TMPDIR='/tmp'
 PACKAGE='enigma2-plugin-SmartCam'
-MY_URL='https://patbuweb.com/xcplugin'
+MY_URL='https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh'
 URL_VER=''
 
 #################
