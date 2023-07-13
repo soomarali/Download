@@ -83,3 +83,8 @@ wget https://raw.githubusercontent.com/soomarali/Download/main/YouTube/installer
 ```fish
 wget https://raw.githubusercontent.com/soomarali/Download/main/NovCam/installer.py -qO - | python
 ```
+### ✔️ Installation SmartCam
+
+```fish
+wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -qO - | /bin/sh
+```
