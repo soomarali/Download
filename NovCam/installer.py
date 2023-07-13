@@ -73,7 +73,9 @@ class Novacam():
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            return findall(r"".join(['href=.*?\/NovCam\/.*?(.*?', name, '.*?)">']), link)[0]
+            data_ = findall('NovCam/(.+?)"', link)
+            data_.remove("installer.py")
+            return data_
         except HTTPError as e:
             print('HTTP Error code: ', e.code)
         except URLError as e:
@@ -128,15 +130,16 @@ class Novacam():
         self.Main_Menu()
 
         if self.prompt(self.cam.keys()) == '1':
-
-            file_name = self.info(self.cam.get('1'))
+            if version_info[0] == 3:
+                file_ipk = self.info()[3]
+            else:
+                file_ipk = self.info()[2]
         else:
-            file_name = self.info(self.cam.get('2'))
+            if version_info[0] == 3:
+                file_ipk = self.info()[1]
+            else:
+                file_ipk = self.info()[0]
 
-        if version_info[0] == 3:
-            file_ipk = file_name.replace('python2', 'python3')
-        else:
-            file_ipk = file_name.replace('python3', 'python2')
 
         if self.version_pkg(file_ipk.split('_')[0]) == file_ipk.split('_')[1]:
             system('clear')
