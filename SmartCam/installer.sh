@@ -11,7 +11,7 @@
 # Configure where we can find things here #
 TMPDIR='/tmp'
 PACKAGE='enigma2-plugin-SmartCam'
-MY_URL='https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh'
+MY_URL='https://raw.githubusercontent.com/soomarali/Download/main/SmartCam'
 URL_VER=''
 
 #################
