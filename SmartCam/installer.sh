@@ -6,7 +6,7 @@
 # Command: wget https://raw.githubusercontent.com/biko-73/EvgQuickSignal/main/installer.sh -O - | /bin/sh #
 # =====================================================================================================================
 
-PACKAGE_DIR='soomarali/Download/main/SmartCam'
+PACKAGE_DIR='Download/main/SmartCam'
 MY_IPK="enigma2-plugin-extensions-evgquicksignal_1.2_all.ipk"
 
 MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/"
