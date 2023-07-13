@@ -10,7 +10,7 @@
 ###########################################
 # Configure where we can find things here #
 TMPDIR='/tmp'
-PACKAGE='enigma2-plugin-SmartCam'
+PACKAGE='enigma2-smartcam'
 MY_URL='https://raw.githubusercontent.com/soomarali/Download/main/SmartCam'
 URL_VER=''
 
@@ -52,7 +52,7 @@ fi
 
 ###################
 #  Install Plugin #
-echo "SmartCam plugin Please Wait ......"
+echo "SmartCam server plugin Please Wait ......"
 if [ "$OSTYPE" = "Opensource" ]; then
     wget $MY_URL/${PACKAGE}_"${VERSION}"_all.ipk -qP $TMPDIR
     $OPKGINSTAL $TMPDIR/${PACKAGE}_"${VERSION}"_all.ipk
