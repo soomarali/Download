@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# ###########################################
+# SCRIPT : DOWNLOAD AND INSTALL Quran Karim
+# ###########################################
+#
+# Command: wget https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/installer.sh -qO - | /bin/sh
+#
+# ###########################################
 # URL of the file to download
 FILE_URL="https://raw.githubusercontent.com/soomarali/Download/main/SmartCam/enigma2-smartcam_11546_all.ipk"
 
@@ -25,3 +32,15 @@ if [ $? -eq 0 ]; then
 else
   echo "Package installation failed."
 fi
+echo ""
+echo "***********************************************************************"
+echo "**                                                                    *"
+echo "**                       SmartCam     : v4                            *"
+echo "**                       Uploaded by: ASGHAR_ALI                      *"
+echo "**                       Develop For : DREAMWORLD                     *"
+echo "**                       Support     : 03357300604                    *"
+echo "**                                                                    *"
+echo "***********************************************************************"
+echo ""
+
+exit 0
