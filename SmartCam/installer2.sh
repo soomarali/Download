@@ -13,7 +13,7 @@
 PACKAGE_DIR='soomarali/Download//main/SmartCam'
 
 MY_IPK="enigma2-smartcam_11546_all.ipk"
-MY_DEB="enigma2-smartcam_11546_all.deb"
+MY_DEB="enigma2-smartcam_11.572_all.deb"
 
 ########################################################################################################################
 # Auto ... Do not change
