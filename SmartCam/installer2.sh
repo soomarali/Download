@@ -10,7 +10,7 @@
 # Plugin	... Enter Manually
 ########################################################################################################################
 
-PACKAGE_DIR='soomarali/Download//main/SmartCam'
+PACKAGE_DIR='Download//main/SmartCam'
 
 MY_IPK="enigma2-smartcam_11546_all.ipk"
 MY_DEB="enigma2-smartcam_11.572_all.deb"
@@ -20,7 +20,7 @@ MY_DEB="enigma2-smartcam_11.572_all.deb"
 ########################################################################################################################
 
 # Decide : which package ?
-MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/Download/SmartCam/"
+MY_MAIN_URL="https://raw.githubusercontent.com/soomarali/"
 if which dpkg > /dev/null 2>&1; then
 	MY_FILE=$MY_DEB
 	MY_URL=$MY_MAIN_URL$PACKAGE_DIR'/'$MY_DEB
