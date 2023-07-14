@@ -85,7 +85,7 @@ if [ -f $MY_TMP_FILE ]; then
 	echo ''
 	echo '**************************************************'
 	echo '**                   FINISHED                   **'
-	echo '**	Uploaded b : ASGHAR ALI		      **'
+	echo '**	Uploaded BY : ASGHAR ALI	      **'
  	echo '**	Devolped For: DREAMWORLD 	      **'
   	echo '**	SUPPORT     : 03357300604	      **'  
  	echo '**************************************************'
